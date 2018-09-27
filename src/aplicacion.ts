@@ -71,14 +71,16 @@ class Aplicacion {
 
             if(this.esXml){
 
-                xml2js.Conversion(xmlOJson,(result)=>{
+                xml2js.conversion(xmlOJson,(result)=>{
                     res.status(200).send(result);
                 });
 
             }else if(this.esXml == false){
-
-                console.log('Aun no tengo el modulo de conversion de xml a json');
-                res.status(200).send({mensaje: 'OK'});
+               
+                let json = JSON.parse(xmlOJson);
+                xml2js.reconstruir(json,(xml)=>{
+                    res.status(200).send(xml);
+                });
 
             }else if(this.esXml == null){
 
@@ -115,7 +117,7 @@ class Aplicacion {
                 if(this.esXml){
                     this.extension = '.json';
                     fileOutName = `${fileInName.substr(0,(fileInName.length-4))}${this.extension}`;
-                    xml2js.Conversion(data,(result)=>{
+                    xml2js.conversion(data,(result)=>{
                         fs.writeFile(fileOutPath+fileOutName,result,(err)=>{
 
                             if(err){
@@ -174,10 +176,11 @@ class Aplicacion {
                 this.esXml = true;
                 return this.esXml;
 
-            }else if(data.substr(0,1) =='{'){
+            }else if(data.substr(0,1) =='{' || data.substr(0,1)=='['){
 
                 this.esXml = false;
                 return this.esXml;
+
             }else{
                 this.esXml = null;
                 return this.esXml;

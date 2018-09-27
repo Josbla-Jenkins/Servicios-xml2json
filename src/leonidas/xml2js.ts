@@ -5,7 +5,7 @@ class Xml2jsWorker {
     constructor(){   
     }
     
-    public Conversion(xml : string, callback) : any{
+    public conversion(xml : string, callback) : any{
         if(xml != null && xml != ''){
             let conversionCadena = leonidas.parseString;
                 conversionCadena(xml, (err, result) =>{
