@@ -124,8 +124,7 @@ class Aplicacion {
                                     if(err){
                                         console.log(err);
                                         res.status(500).send({mensaje: err});
-                                    }else
-                                        res.status(200).send({mensaje: 'OK'});
+                                    }
                                 });
                             }     
                         });
