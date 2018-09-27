@@ -11,6 +11,7 @@ class Aplicacion {
 
     public express : any;
     public esXml : boolean;
+    public extension : string = null;
 
     constructor(){
         this.express = express();
@@ -100,7 +101,7 @@ class Aplicacion {
     public leerArchivoYConvertir(filePath: string, fileInName: string, res : any){
 
         this.esXml = null;
-        let fileOutName : string = 'convertedXml2Json.json';
+        let fileOutName : string = null;
         let fileOutPath : string = `./assets/files-converted/`;
 
         fs.readFile(filePath+fileInName,'latin1',(err, data)=>{
@@ -112,11 +113,13 @@ class Aplicacion {
             else{
                 this.detectarXmlOJson(data);
                 if(this.esXml){
+                    this.extension = '.json';
+                    fileOutName = `${fileInName.substr(0,(fileInName.length-4))}${this.extension}`;
                     xml2js.Conversion(data, function(result){
                         fs.writeFile(fileOutPath+fileOutName,result,(err)=>{
                             if(err)
                                 console.log(err);
-                            else
+                            else{
                                 res.download(fileOutPath+fileOutName,fileOutName, function(err){
                                     if(err){
                                         console.log(err);
@@ -124,6 +127,7 @@ class Aplicacion {
                                     }else
                                         res.status(200).send({mensaje: 'OK'});
                                 });
+                            }     
                         });
                     });
                 }else if(this.esXml == false){
