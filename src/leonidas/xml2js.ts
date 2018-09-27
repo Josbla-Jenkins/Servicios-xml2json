@@ -8,12 +8,12 @@ class Xml2jsWorker {
     public Conversion(xml : string, callback) : any{
         if(xml != null && xml != ''){
             let conversionCadena = leonidas.parseString;
-                conversionCadena(xml, function(error, resultado){
-                    if(error)
-                        return error;
+                conversionCadena(xml, function(err, result){
+                    if(err)
+                        return err;
                     else{
-                       resultado = JSON.stringify(resultado);
-                        callback(resultado);    
+                       result = JSON.stringify(result);
+                        callback(result);    
                     }
                                  
             });
