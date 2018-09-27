@@ -8,7 +8,7 @@ class Xml2jsWorker {
     public Conversion(xml : string, callback) : any{
         if(xml != null && xml != ''){
             let conversionCadena = leonidas.parseString;
-                conversionCadena(xml, function(err, result){
+                conversionCadena(xml, (err, result) =>{
                     if(err)
                         return err;
                     else{
@@ -20,7 +20,18 @@ class Xml2jsWorker {
         }else{
             return {mensaje : 'vacio' };
         }
-    }          
+    }     
+    
+    public reconstruir(json: object, callback): any{
+
+        if(json != undefined){
+            let builder = new leonidas.Builder({cdata: true});
+            let xml = builder.buildObject(json);
+            callback(xml);
+        }else{
+            return {mensaje: 'vacio'};
+        }
+    }
 }
 
 export default new Xml2jsWorker();

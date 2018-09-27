@@ -18,7 +18,7 @@ class Aplicacion {
         
         this.express.use(fileUpload({
             safeFileNames : true,
-            preserveExtension : true
+            preserveExtension : 4
             }
         ));
 
@@ -51,7 +51,7 @@ class Aplicacion {
                 let filePath : string = `./assets/files-uploaded/`;
                 let fileInName : string = `${EDFile.name}`;
                 
-                EDFile.mv(filePath+fileInName, err =>{
+                EDFile.mv(filePath+fileInName, (err) =>{
                     if(err){
                         return res.status(500).send({mensaje: err});
                     }else{
@@ -71,7 +71,7 @@ class Aplicacion {
 
             if(this.esXml){
 
-                xml2js.Conversion(xmlOJson, function(result){
+                xml2js.Conversion(xmlOJson,(result)=>{
                     res.status(200).send(result);
                 });
 
@@ -115,12 +115,15 @@ class Aplicacion {
                 if(this.esXml){
                     this.extension = '.json';
                     fileOutName = `${fileInName.substr(0,(fileInName.length-4))}${this.extension}`;
-                    xml2js.Conversion(data, function(result){
+                    xml2js.Conversion(data,(result)=>{
                         fs.writeFile(fileOutPath+fileOutName,result,(err)=>{
-                            if(err)
+
+                            if(err){
                                 console.log(err);
+                                res.status(500).send({mensaje: err});
+                            } 
                             else{
-                                res.download(fileOutPath+fileOutName,fileOutName, function(err){
+                                res.download(fileOutPath+fileOutName,fileOutName,(err)=>{
                                     if(err){
                                         console.log(err);
                                         res.status(500).send({mensaje: err});
@@ -131,9 +134,28 @@ class Aplicacion {
                     });
                 }else if(this.esXml == false){
 
-                    console.log('Aun no tengo el modulo de conversion de json a xml');
-                    res.status(200).send({mensaje: 'OK'});
+                    let json = JSON.parse(data);
+                    this.extension = '.xml';
+                    fileOutName = `${fileInName.substr(0,(fileInName.length-5))}${this.extension}`;
+                    xml2js.reconstruir(json,(xml)=>{
 
+                        xml = this.regularizacionesXml(xml);
+
+                        fs.writeFile(fileOutPath+fileOutName, xml,(err)=>{
+                            if(err){
+                                console.log(err);
+                                res.status(500).send({mensaje: err});
+                            }else{
+                                res.download(fileOutPath+fileOutName,fileOutName,(err)=>{
+                                    if(err){
+                                        console.log(err);
+                                        res.status(500).send({mensaje: err});
+                                    }
+                                });
+                            }
+                        });
+                    });
+                    
                 } else if (this.esXml == null) {
 
                     console.log('Que huea me pasate hermano?');
@@ -161,6 +183,17 @@ class Aplicacion {
                 return this.esXml;
             }
         }
+    }
+
+    public regularizacionesXml(xml : string){
+        let reg = /&lt;/g;
+        let reg1 = /&gt;/g;
+        let reg2 = /&#xD;/g;
+        
+        xml = xml.replace(reg, '<');
+        xml = xml.replace(reg1, '>');
+        xml = xml.replace(reg2, '');
+        return xml;
     }
 }
 
