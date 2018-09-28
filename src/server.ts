@@ -1,9 +1,9 @@
 import app from './aplicacion';
 
 //usar esta linea en produccion
-//let port : any = process.env.PORT;
+let port : any = process.env.PORT;
 //esta en dev.
-let port : any = 4300;
+// let port : any = 4300;
 
 app.listen(port, (error : any) =>{
     if(error){

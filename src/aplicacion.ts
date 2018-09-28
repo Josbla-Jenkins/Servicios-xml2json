@@ -12,6 +12,7 @@ class Aplicacion {
     public express : any;
     public esXml : boolean;
     public extension : string = null;
+    public path : any = require('path');
 
     constructor(){
         this.express = express();
@@ -48,14 +49,14 @@ class Aplicacion {
             let EDFile = req.files.file;
 
             if(EDFile != null){
-                let filePath : string = `./assets/files-uploaded/`;
+                let filePath : string = `/assets/files-uploaded/`;
                 let fileInName : string = `${EDFile.name}`;
                 
-                EDFile.mv(filePath+fileInName, (err) =>{
+                EDFile.mv(this.path.join(__dirname,`${filePath}${fileInName}`), (err) =>{
                     if(err){
                         return res.status(500).send({mensaje: err});
                     }else{
-                        this.leerArchivoYConvertir(filePath, fileInName, res);
+                        this.leerArchivoYConvertir(this.path.join(__dirname, filePath), fileInName, res);
                     }
                 });
             }else{
@@ -104,7 +105,6 @@ class Aplicacion {
 
         this.esXml = null;
         let fileOutName : string = null;
-        let fileOutPath : string = `./assets/files-converted/`;
 
         fs.readFile(filePath+fileInName,'latin1',(err, data)=>{
             if(err){
@@ -118,14 +118,14 @@ class Aplicacion {
                     this.extension = '.json';
                     fileOutName = `${fileInName.substr(0,(fileInName.length-4))}${this.extension}`;
                     xml2js.conversion(data,(result)=>{
-                        fs.writeFile(fileOutPath+fileOutName,result,(err)=>{
+                        fs.writeFile(this.path.join(__dirname, `/assets/files-converted/${fileOutName}`),result,(err)=>{
 
                             if(err){
                                 console.log(err);
                                 res.status(500).send({mensaje: err});
                             } 
                             else{
-                                res.download(fileOutPath+fileOutName,fileOutName,(err)=>{
+                                res.download(this.path.join(__dirname, `/assets/files-converted/${fileOutName}`),fileOutName,(err)=>{
                                     if(err){
                                         console.log(err);
                                         res.status(500).send({mensaje: err});
@@ -143,12 +143,12 @@ class Aplicacion {
 
                         xml = this.regularizacionesXml(xml);
 
-                        fs.writeFile(fileOutPath+fileOutName, xml,(err)=>{
+                        fs.writeFile(this.path.join(__dirname,`/assets/files-converted/${fileOutName}`), xml,(err)=>{
                             if(err){
                                 console.log(err);
                                 res.status(500).send({mensaje: err});
                             }else{
-                                res.download(fileOutPath+fileOutName,fileOutName,(err)=>{
+                                res.download(this.path.join(__dirname,`/assets/files-converted/${fileOutName}`),fileOutName,(err)=>{
                                     if(err){
                                         console.log(err);
                                         res.status(500).send({mensaje: err});
