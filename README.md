@@ -5,11 +5,21 @@ corre en localhost:4300/converter/"url-a-convertir" (las " no van no seas...)
 Recibe como parametro una url o un archivo xml y lo convierte a json y viceversa.
 La url no necesita ser normalizada para realizar la conversión.
 
+Es peligroso ir solo, toma esto:
+
+```
+de xml a json:
+localhost:4300/converter/http://portalgeo.sernageomin.cl/geoportal/rest/find/document?searchText=araucania
+
+de json a xml
+localhost:4300/converter/https://jsonplaceholder.typicode.com/posts
+
+```
+
 No tienes que preocuparte de nada es suficientemente inteligente para saber diferenciar entre un xml y json 
 y hacer la conversion adecuada.
 
-para entregarle el archivo se debe usar localhost:4300/upload tienes que enviar el archivo por metodo POST
-y el nombre del input debe ser "file".
+para entregarle el archivo debes usar localhost:4300/upload, el nombre del input debe ser "file".
 
 Para asegurame de que no tengas que ir a stack overflow te dejare esto:
 ```html
