@@ -113,7 +113,7 @@ No tienes que preocuparte por declarar los objetos, solo tienes que preocuparte 
 yo hago el JSON.parse() por ti :D
 
 de todas maneras si qieres mas info para mejorar o customizar esta api : https://github.com/Leonidas-from-XIV/node-xml2js
-Con gusto acepto coperacion para mejorar aun mas esta api.
+Con gusto acepto coperacion para mejorarla aun mas.
 
 Pero cuidado aun no implemento nada que borre los archivos, es un punto pendiente... me puedo quedar con todos tus secretos :3
 
