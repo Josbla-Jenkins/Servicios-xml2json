@@ -4,7 +4,8 @@
   "description": "Servicios recepccion archivos en el servicdor node y conversion de xml a json",
   "main": "src/server.ts",
   "scripts": {
-    "start": "npm run build:live",
+    "start-production": "node ./lib/server.js",
+    "start-dev": "npm run build:live",
     "build": "tsc -p .",
     "build:live": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts"
   },

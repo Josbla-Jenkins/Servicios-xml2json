@@ -1,6 +1,6 @@
 import app from './aplicacion';
 
-let port : number = 4300;
+let port : any = process.env.PORT;
 
 app.listen(port, (error : any) =>{
     if(error){
