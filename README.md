@@ -12,12 +12,12 @@ para entregarle el archivo se debe usar localhost:4300/upload tienes que enviar 
 y el nombre del input debe ser "file".
 
 Para asegurame de que no tengas que ir a stack overflow te dejare esto:
-
+```html
 <form action='http://localhost:4300/upload' method="POST" enctype="multipart/form-data">
   <input type="file" class="col-6" name="file">
   <button type="submit">Subir...</button>
 </form>
-
+```
 Así tambien me aseguro de no ver tu rostro en las cajas de leche despues:
 el comando de ejecucion es npm start.
 
