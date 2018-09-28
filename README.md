@@ -1,4 +1,4 @@
-Api conversion de xml a json
+<h1><bold>Api conversion de xml a json</bold></h1>
 
 corre en localhost:4300/converter/"url-a-convertir" (las " no van no seas...)
 
@@ -29,11 +29,45 @@ Para asegurame de que no tengas que ir a stack overflow te dejare esto:
 </form>
 ```
 Así tambien me aseguro de no ver tu rostro en las cajas de leche despues:
-el comando de ejecucion es npm start.
+el comando de ejecucion es npm run start-dev para correrla en modo desarrollo.
+```
+WARNING!!! WARNING!! WARNING!!!
+
+cada vez se modifique la api recomiendo correr: npm run build
+así tendras siempre la ultima version de los js compilada en la carpeta lib.
+```
+
+en modo produccion ejecuta npm run start-production
+
 
 node 8.11 + typescript 3.3 + nodemon 1.8.1
 
 algo no menos importante: TS y ts-node deben estar instaldos de manera global.
 
-proximanete se montara en heroku.
+<h1><bold>CONSUMIR DESDE HEROKU</bold></h1>
+
+Bien ahora tambien puedes ir y consumir el servicio comodamente... 
+
+para ello solo debes consumir esta url: 
+```
+https://api-bidireccional-xml2json.herokuapp.com/converter/
+
+para asegurame te llevare de la mano
+
+https://api-bidireccional-xml2json.herokuapp.com/converter/geoportal/rest/find/document?searchText=arica
+
+te entregara el json equivalente 
+
+https://api-bidireccional-xml2json.herokuapp.com/converter/https://jsonplaceholder.typicode.com/posts
+
+te entregara el xml correspondiente
+```
+
+Shinji usa POSTMAN o rei tendra que hacerlo de nuevo!!
+
+si quieres subir archivos json o xml :
+
+https://api-bidireccional-xml2json.herokuapp.com/upload
+
+pero cuidado aun no implemento nada que borre los archivos, es un punto pendiente... me puedo quedar con todos tus secretos :3
 
