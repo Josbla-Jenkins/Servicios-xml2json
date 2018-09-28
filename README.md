@@ -58,16 +58,62 @@ https://api-bidireccional-xml2json.herokuapp.com/converter/geoportal/rest/find/d
 
 te entregara el json equivalente 
 
+(OJO MÁS ABAJO HAY INFO QUE PODRIA INTERESARTE PARA CONVERTIR JSON A XML DE MANERA CORRECTA, 
+APLICA TANTO PARA EL USO DE ARCHIVOS COMO PARA EL CONSUMO DE LA API VIA URL).
+
 https://api-bidireccional-xml2json.herokuapp.com/converter/https://jsonplaceholder.typicode.com/posts
 
 te entregara el xml correspondiente
 ```
+Olvide mencionarlo, esta api permite la escritura de CDATA :D
 
 Shinji usa POSTMAN o rei tendra que hacerlo de nuevo!!
 
 si quieres subir archivos json o xml :
-
+```
 https://api-bidireccional-xml2json.herokuapp.com/upload
 
-pero cuidado aun no implemento nada que borre los archivos, es un punto pendiente... me puedo quedar con todos tus secretos :3
+PRO TIPS PARA LA CONVERSION DE JSON A XML:
+
+agregando atributos xmlns: 
+
+{ 
+  Foo: {
+    $: {
+      "xmlns": "http://foo.com"
+    }   
+  }
+};  
+
+entrega:
+
+<Foo xmlns="http://foo.com"/>
+
+Ejemplo de declaracion de nombres de espacio que no son por defecto:
+
+{
+  'foo:Foo': {
+    $: {
+      'xmlns:foo': 'http://foo.com'
+    },
+    'bar:Bar': {
+      $: {
+        'xmlns:bar': 'http://bar.com'
+      }
+    }
+  }
+}
+resultado:
+
+<foo:Foo xmlns:foo="http://foo.com">
+  <bar:Bar xmlns:bar="http://bar.com"/>
+</foo:Foo>
+```
+No tienes que preocuparte por declarar los objetos, solo tienes que preocuparte de que el json este bien escrito,
+yo hago el JSON.parse() por ti :D
+
+de todas maneras si qieres mas info para mejorar o customizar esta api : https://github.com/Leonidas-from-XIV/node-xml2js
+Con gusto acepto coperacion para mejorar aun mas esta api.
+
+Pero cuidado aun no implemento nada que borre los archivos, es un punto pendiente... me puedo quedar con todos tus secretos :3
 
